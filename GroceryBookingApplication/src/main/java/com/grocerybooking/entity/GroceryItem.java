@@ -5,15 +5,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * A entity class defining the grocery item or product
  */
 @Entity
+@Table(name = "groceryitem")
 public class GroceryItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "itemId")
 	long itemId;
 	
 	@Column(name = "itemname")
@@ -25,7 +28,6 @@ public class GroceryItem {
 	@Column(name = "availablestock")
 	int availableStock;
 
-	
 	/**
 	 * Default/ No-args constructor for GroceryItem
 	 */

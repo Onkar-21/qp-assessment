@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.grocerybooking.dto.OrderRequestBean;
+import com.grocerybooking.dto.OrderResponseBean;
 import com.grocerybooking.entity.GroceryItem;
 import com.grocerybooking.service.GroceryBookingService;
 
@@ -34,6 +37,7 @@ public class GroceryBookingController {
 	
 	/**
 	 * Admin Req2: View existing grocery items.
+	 * User Req1: View the list of available grocery items(Without available stock).
 	 * @return ResponseEntity<List<GroceryItem>>
 	 */
 	@GetMapping("/getAllGroceryItems")
@@ -69,6 +73,16 @@ public class GroceryBookingController {
 	@PatchMapping("/updateGroceryStock")
 	public ResponseEntity<List<GroceryItem>> updateGroceryStock(@RequestBody List<GroceryItem> groceryItems) {
 		return groceryBookingService.updateGroceryStock(groceryItems);
+	}
+
+	/**
+	 * User Req2: Ability to book multiple grocery items in a single order
+	 * @param groceryItem
+	 * @return ResponseEntity<List<GroceryItem>>
+	 */
+	@PostMapping("/orderGroceryItems")
+	public ResponseEntity<List<OrderResponseBean>> orderGroceryItems(@RequestBody List<OrderRequestBean> orderRequestBean) {
+		return groceryBookingService.orderGroceryItems(orderRequestBean);
 	}
 	
 }

@@ -23,10 +23,10 @@ import com.grocerybooking.repository.GroceryOrderRepository;
 public class GroceryBookingService {
 
 	@Autowired
-	public GroceryItemRepository groceryItemRepository;
+	private GroceryItemRepository groceryItemRepository;
 
 	@Autowired
-	public GroceryOrderRepository groceryOrderRepository;
+	private GroceryOrderRepository groceryOrderRepository;
 	
 	/**
 	 * Saves the GroceryItem in the repository
@@ -83,7 +83,7 @@ public class GroceryBookingService {
 		if (null == groceryItemRepository) {
 			return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
-		Optional<GroceryItem> groceryItemCheck = groceryItemRepository.findById(groceryItem.getItemId());
+		Optional<GroceryItem> groceryItemCheck = groceryItemRepository.findById(groceryItem.getGroceryItemId());
 		if (groceryItemCheck.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -105,15 +105,11 @@ public class GroceryBookingService {
 		List<GroceryItem> updatedItemsList = new ArrayList<>();
 		
 		for (GroceryItem groceryItem : groceryItems) {
-			Optional<GroceryItem> groceryItemCheck = groceryItemRepository.findById(groceryItem.getItemId());
+			Optional<GroceryItem> groceryItemCheck = groceryItemRepository.findById(groceryItem.getGroceryItemId());
 			if (!groceryItemCheck.isEmpty()) {
-				GroceryItem groceryItemNew = new GroceryItem();
-				groceryItemNew.setItemId(groceryItem.getItemId());
-				groceryItemNew.setItemName(groceryItemCheck.get().getItemName());
-				groceryItemNew.setItemPrice(groceryItemCheck.get().getItemPrice());
-				groceryItemNew.setAvailableStock(groceryItem.getAvailableStock());
-				groceryItemRepository.save(groceryItemNew);
-				updatedItemsList.add(groceryItemCheck.get());
+				groceryItemCheck.get().setGroceryItemAvailableStock(groceryItem.getGroceryItemAvailableStock());
+				groceryItemRepository.save(groceryItemCheck.get());
+				updatedItemsList.add(groceryItem);
 			}
 		}
 
@@ -131,20 +127,28 @@ public class GroceryBookingService {
 		}
 		List<OrderResponseBean> orderResponseBeans = new ArrayList<>();
 		List<PurchasedProduct> purchasedProducts = new ArrayList<>();
+		GroceryOrder groceryOrder = new GroceryOrder();
 		
 		for (OrderRequestBean orderRequestBean : OrderRequestBeans) {
 			Optional<GroceryItem> groceryItemCheck = groceryItemRepository.findById(orderRequestBean.getGroceryItemId());
 			
-			if (!groceryItemCheck.isEmpty()) {
-				if (groceryItemCheck.get().getAvailableStock() >= orderRequestBean.getQuantity()) {
-					purchasedProducts.add(new PurchasedProduct(groceryItemCheck.get(), orderRequestBean.getQuantity()));
-					
+			if (groceryItemCheck.isPresent()) {
+				GroceryItem groceryItem = groceryItemCheck.get();
+				if (groceryItem.getGroceryItemAvailableStock() >= orderRequestBean.getQuantity()) {
+					purchasedProducts.add(new PurchasedProduct(groceryItem, orderRequestBean.getQuantity()));
+					groceryItem.setGroceryItemAvailableStock(groceryItem.getGroceryItemAvailableStock()-orderRequestBean.getQuantity());
+					groceryItemRepository.save(groceryItem);
 					orderResponseBeans.add(new OrderResponseBean(orderRequestBean.getGroceryItemId(), orderRequestBean.getQuantity()));
 				}
 			}
 		}
-		GroceryOrder groceryOrder = new GroceryOrder();
-		groceryOrder.setPurchasedProduct(purchasedProducts);
+
+		if (orderResponseBeans.isEmpty()) {
+	        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	    }
+
+		
+		groceryOrder.setPurchasedProducts(purchasedProducts);
 		groceryOrderRepository.save(groceryOrder);
 		
 		return new ResponseEntity<>(orderResponseBeans, HttpStatus.OK);

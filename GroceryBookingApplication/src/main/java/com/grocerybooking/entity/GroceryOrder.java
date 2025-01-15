@@ -1,7 +1,6 @@
 package com.grocerybooking.entity;
 
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +8,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 /**
@@ -20,12 +21,14 @@ import jakarta.persistence.Table;
 public class GroceryOrder {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "orderId")
-	long orderId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groceryorder_seq")
+	@SequenceGenerator(name = "groceryorder_seq", sequenceName = "groceryorder_seq", allocationSize = 1)
+	@Column(name = "groceryOrderId")
+	private long groceryOrderId;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	List<PurchasedProduct> purchasedProduct;
+	@JoinColumn(name = "groceryOrderId", referencedColumnName = "groceryOrderId")
+	private List<PurchasedProduct> purchasedProducts;
 
 	/**
 	 * Default/ No-args constructor for GroceryOrder
@@ -35,44 +38,41 @@ public class GroceryOrder {
 	}
 
 	/**
-	 * Constructor for GroceryOrder
 	 * @param groceryOrderId
-	 * @param purchasedProduct
+	 * @param purchasedProducts
 	 */
-	public GroceryOrder(long orderId, List<PurchasedProduct> purchasedProduct) {
+	public GroceryOrder(long groceryOrderId, List<PurchasedProduct> purchasedProducts) {
 		super();
-		this.orderId = orderId;
-		this.purchasedProduct = purchasedProduct;
+		this.groceryOrderId = groceryOrderId;
+		this.purchasedProducts = purchasedProducts;
 	}
 
 	/**
-	 * @return orderId
+	 * @return the groceryOrderId
 	 */
-	public long getOrderId() {
-		return orderId;
+	public long getGroceryOrderId() {
+		return groceryOrderId;
 	}
 
 	/**
-	 * Sets the orderId
-	 * @param orderId
+	 * @param groceryOrderId the groceryOrderId to set
 	 */
-	public void setOrderId(long groceryOrderId) {
-		this.orderId = groceryOrderId;
+	public void setGroceryOrderId(long groceryOrderId) {
+		this.groceryOrderId = groceryOrderId;
 	}
 
 	/**
-	 * @return purchasedProduct
+	 * @return the purchasedProducts
 	 */
-	public List<PurchasedProduct> getPurchasedProduct() {
-		return purchasedProduct;
+	public List<PurchasedProduct> getPurchasedProducts() {
+		return purchasedProducts;
 	}
 
 	/**
-	 * Sets the purchasedProduct
-	 * @param purchasedProduct
+	 * @param purchasedProducts the purchasedProducts to set
 	 */
-	public void setPurchasedProduct(List<PurchasedProduct> purchasedProduct) {
-		this.purchasedProduct = purchasedProduct;
+	public void setPurchasedProducts(List<PurchasedProduct> purchasedProducts) {
+		this.purchasedProducts = purchasedProducts;
 	}
-	
+
 }

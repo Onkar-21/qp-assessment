@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 /**
@@ -15,18 +16,19 @@ import jakarta.persistence.Table;
 public class GroceryItem {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "itemId")
-	long itemId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groceryitem_seq")
+	@SequenceGenerator(name = "groceryitem_seq", sequenceName = "groceryitem_seq", allocationSize = 1)
+	@Column(name = "groceryItemId")
+	private long groceryItemId;
 	
-	@Column(name = "itemname")
-	String itemName;
+	@Column(name = "groceryItemName")
+	private String groceryItemName;
 	
-	@Column(name = "itemprice")
-	float itemPrice;
+	@Column(name = "groceryItemPrice")
+	private float groceryItemPrice;
 	
-	@Column(name = "availablestock")
-	int availableStock;
+	@Column(name = "groceryItemAvailableStock")
+	private int groceryItemAvailableStock;
 
 	/**
 	 * Default/ No-args constructor for GroceryItem
@@ -40,74 +42,71 @@ public class GroceryItem {
 	 * @param itemId
 	 * @param itemName
 	 * @param itemPrice
-	 * @param availableStock
+	 * @param AvailableStock
 	 */
-	public GroceryItem(long itemId, String itemName, float itemPrice, int availableStock) {
+	public GroceryItem(long groceryItemId, String groceryItemName, float groceryItemPrice,
+			int groceryItemAvailableStock) {
 		super();
-		this.itemId = itemId;
-		this.itemName = itemName;
-		this.itemPrice = itemPrice;
-		this.availableStock = availableStock;
+		this.groceryItemId = groceryItemId;
+		this.groceryItemName = groceryItemName;
+		this.groceryItemPrice = groceryItemPrice;
+		this.groceryItemAvailableStock = groceryItemAvailableStock;
+	}
+	
+	/**
+	 * @return the groceryItemId
+	 */
+	public long getGroceryItemId() {
+		return groceryItemId;
 	}
 
 	/**
-	 * @return itemId
+	 * @param groceryItemId the groceryItemId to set
 	 */
-	public long getItemId() {
-		return itemId;
+	public void setGroceryItemId(long groceryItemId) {
+		this.groceryItemId = groceryItemId;
 	}
 
 	/**
-	 * Sets the itemId
-	 * @param itemId
+	 * @return the groceryItemName
 	 */
-	public void setItemId(long itemId) {
-		this.itemId = itemId;
+	public String getGroceryItemName() {
+		return groceryItemName;
 	}
 
 	/**
-	 * @return itemName
+	 * @param groceryItemName the groceryItemName to set
 	 */
-	public String getItemName() {
-		return itemName;
+	public void setGroceryItemName(String groceryItemName) {
+		this.groceryItemName = groceryItemName;
 	}
 
 	/**
-	 * Sets the itemName
-	 * @param itemName
+	 * @return the groceryItemPrice
 	 */
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
+	public float getGroceryItemPrice() {
+		return groceryItemPrice;
 	}
 
 	/**
-	 * @return itemPrice
+	 * @param groceryItemPrice the groceryItemPrice to set
 	 */
-	public float getItemPrice() {
-		return itemPrice;
+	public void setGroceryItemPrice(float groceryItemPrice) {
+		this.groceryItemPrice = groceryItemPrice;
 	}
 
 	/**
-	 * Sets the itemPrice
-	 * @param itemPrice
+	 * @return the groceryItemAvailableStock
 	 */
-	public void setItemPrice(float itemPrice) {
-		this.itemPrice = itemPrice;
+	public int getGroceryItemAvailableStock() {
+		return groceryItemAvailableStock;
 	}
 
 	/**
-	 * @return availableStock
+	 * @param groceryItemAvailableStock the groceryItemAvailableStock to set
 	 */
-	public int getAvailableStock() {
-		return availableStock;
-	}
-
-	/**
-	 * Sets the availableStock
-	 * @param availableStock
-	 */
-	public void setAvailableStock(int availableStock) {
-		this.availableStock = availableStock;
+	public void setGroceryItemAvailableStock(int groceryItemAvailableStock) {
+		this.groceryItemAvailableStock = groceryItemAvailableStock;
 	}
 
 	/**
@@ -117,9 +116,9 @@ public class GroceryItem {
 	 */
 	public static GroceryItem updateItem(GroceryItem groceryItem) {
 		GroceryItem groceryItemTemp = new GroceryItem();
-		groceryItemTemp.setItemId(groceryItem.getItemId());
-		groceryItemTemp.setItemName(groceryItem.getItemName());
-		groceryItemTemp.setItemPrice(groceryItem.getItemPrice());
+		groceryItemTemp.setGroceryItemId(groceryItem.getGroceryItemId());
+		groceryItemTemp.setGroceryItemName(groceryItem.getGroceryItemName());
+		groceryItemTemp.setGroceryItemPrice(groceryItem.getGroceryItemPrice());
 		
 		return groceryItem;
 	}

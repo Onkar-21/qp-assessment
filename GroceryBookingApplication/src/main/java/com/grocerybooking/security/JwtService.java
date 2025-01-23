@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +25,8 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtService {
     
-	public static final String SECRET = "9D0EB6B1C2E1FAD0F53A248F6C3B5E4E2F6D8G3H1I0J7K4L1M9N2O3P5Q0R7S9T1U4V2W6X0Y3Z";
+	@Value("${jwtSecret}")
+	public String SECRET;
     
     public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();

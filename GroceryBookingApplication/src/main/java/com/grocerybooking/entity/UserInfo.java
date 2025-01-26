@@ -27,7 +27,7 @@ public class UserInfo {
 	@Column(name = "userName", unique = true)
     private String userName;
     
-	@Column(name = "userEmail")
+	@Column(name = "userEmail", unique = true)
     private String userEmail;
     
 	@Column(name = "userPassword")

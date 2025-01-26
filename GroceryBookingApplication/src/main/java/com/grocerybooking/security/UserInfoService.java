@@ -1,7 +1,10 @@
 package com.grocerybooking.security;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,9 +39,20 @@ public class UserInfoService implements UserDetailsService {
 	}
 	
 	public String addUser(UserInfo userInfo) {
-		userInfo.setUserPassword(passwordEncoder.encode(userInfo.getUserPassword()));
-		userInfoRepository.save(userInfo);
-		return "User Added Successfully";
+	    userInfo.setUserPassword(passwordEncoder.encode(userInfo.getUserPassword()));
+	    try {
+	        userInfoRepository.save(userInfo);
+	        return "User added successfully.";
+	    } catch (DataIntegrityViolationException e) {
+	        // Handle duplicate entry (e.g., unique constraint violation)
+	        if (e.getCause() instanceof ConstraintViolationException) {
+	            return "User with the same username/email already exists.";
+	        }
+	        return "Failed to add user due to data integrity violation.";
+	    } catch (Exception e) {
+	        // Handle other unexpected exceptions
+	        return "An unexpected error occurred: " + e.getMessage();
+	    }
 	}
 
 	/**

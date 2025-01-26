@@ -1,16 +1,16 @@
 package com.grocerybooking.dto;
 
+import com.grocerybooking.entity.GroceryOrder;
+
 /**
  * A dto class for transferring data from frontend to backend and withing classes
  */
 public class OrderResponseBean {
 
-	long groceryOrderId;
+	private String message;
 	
-	long groceryItemId;
+	private GroceryOrder groceryOrder; 
 	
-	int quantity;
-
 	/**
 	 * Default/ No-args constructor for OrderRequest
 	 */
@@ -19,44 +19,41 @@ public class OrderResponseBean {
 	}
 
 	/**
-	 * Constructor for OrderRequest
-	 * @param groceryItemId
-	 * @param quantity
+	 * @param groceryOrderId
+	 * @param groceryOrder
 	 */
-	public OrderResponseBean(long groceryItemId, int quantity) {
+	public OrderResponseBean(String message, GroceryOrder groceryOrder) {
 		super();
-		this.groceryItemId = groceryItemId;
-		this.quantity = quantity;
+		this.message = message;
+		this.groceryOrder = groceryOrder;
 	}
 
 	/**
-	 * @return groceryItemId
+	 * @return the message
 	 */
-	public long getGroceryItemId() {
-		return groceryItemId;
+	public String getMessage() {
+		return message;
 	}
 
 	/**
-	 * Sets the groceryItemId
-	 * @param groceryItemId
+	 * @param message the message to set
 	 */
-	public void setGroceryItemId(long groceryItemId) {
-		this.groceryItemId = groceryItemId;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	/**
-	 * @return quantity
+	 * @return the groceryOrder
 	 */
-	public int getQuantity() {
-		return quantity;
+	public GroceryOrder getGroceryOrder() {
+		return groceryOrder;
 	}
 
 	/**
-	 * Sets the quantity
-	 * @param quantity
+	 * @param groceryOrder the groceryOrder to set
 	 */
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setGroceryOrder(GroceryOrder groceryOrder) {
+		this.groceryOrder = groceryOrder;
 	}
-	
+
 }

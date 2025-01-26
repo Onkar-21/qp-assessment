@@ -42,7 +42,7 @@ public class UserController {
 	 * @return ResponseEntity<List<GroceryItem>>
 	 */
 	@PostMapping("/orderGroceryItems")
-	public ResponseEntity<List<OrderResponseBean>> orderGroceryItems(@RequestBody List<OrderRequestBean> orderRequestBean) {
+	public ResponseEntity<OrderResponseBean> orderGroceryItems(@RequestBody List<OrderRequestBean> orderRequestBean) {
 		return orderItemService.orderGroceryItems(orderRequestBean);
 	}
 }

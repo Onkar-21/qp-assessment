@@ -1,5 +1,7 @@
 package com.grocerybooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,6 +25,7 @@ public class PurchasedProduct {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "purchasedproduct_seq")
 	@SequenceGenerator(name = "purchasedproduct_seq", sequenceName = "purchasedproduct_seq", allocationSize = 1)
 	@Column(name = "purchasedProductId")
+	@JsonIgnore
 	private long purchasedProductId;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

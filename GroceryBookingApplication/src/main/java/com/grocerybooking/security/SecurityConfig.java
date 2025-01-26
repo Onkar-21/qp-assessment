@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.grocerybooking.repository.UserInfoRepository;
-import com.grocerybooking.service.UserInfoService;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 /**

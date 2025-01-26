@@ -1,4 +1,4 @@
-package com.grocerybooking.service;
+package com.grocerybooking.security;
 
 import java.util.Optional;
 
@@ -40,5 +40,17 @@ public class UserInfoService implements UserDetailsService {
 		userInfoRepository.save(userInfo);
 		return "User Added Successfully";
 	}
+
+	/**
+	 * @return
+	 */
+	public UserInfo findByUserName(String username) {
+		Optional<UserInfo> userDetail = userInfoRepository.findByUserName(username);
+		if (null != userDetail) {
+			return userDetail.get();
+		}
+		return null;
+	}
+	
 	
 }

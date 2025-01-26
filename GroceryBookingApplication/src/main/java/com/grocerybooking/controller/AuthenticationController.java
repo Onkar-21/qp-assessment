@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grocerybooking.dto.AuthRequest;
 import com.grocerybooking.entity.UserInfo;
 import com.grocerybooking.security.JwtService;
-import com.grocerybooking.service.UserInfoService;
+import com.grocerybooking.security.UserInfoService;
 
 @RestController
 @RequestMapping("/auth")

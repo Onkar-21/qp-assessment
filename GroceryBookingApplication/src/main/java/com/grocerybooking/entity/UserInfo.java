@@ -21,9 +21,10 @@ public class UserInfo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userinfo_seq")
 	@SequenceGenerator(name = "userinfo_seq", sequenceName = "userinfo_seq", allocationSize = 1)
+	@Column(name = "userId")
     private long userId;
 	
-	@Column(name = "userName")
+	@Column(name = "userName", unique = true)
     private String userName;
     
 	@Column(name = "userEmail")

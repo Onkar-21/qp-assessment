@@ -1,6 +1,5 @@
 package com.grocerybooking.security;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;

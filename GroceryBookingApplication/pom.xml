@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>GroceryBookingApplication</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>GroceryBookingApplication</name>
 	<description>A Grocery Booking Application</description>
 	<url/>

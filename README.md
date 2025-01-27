@@ -23,11 +23,12 @@ The project's requirements and features are as follows:
 ## Dependencies
 
 To run this project, the following resources are needed:
-- JDK 17 or higher.
+- JDK 17 or higher
+- Maven
 - Spring Tool Suite (STS)
-- MySQL Database.
-- Postman for API testing.
-- Docker for containerization.
+- MySQL Database
+- Postman for API testing
+- Docker for containerization
 
 ## Running the Project
 
@@ -59,3 +60,25 @@ User API Endpoints
 - POST /auth/login: login for user
 - POST /app/user/orderGroceryItems: Place an order for multiple grocery items.
 - GET /app/user/getAllGroceryItems: View the list of available grocery items.
+
+### Containerization (Using Docker)
+- You can also containerize the application using Docker
+- Generate the jar file for the application:
+  ```
+  $ mvn clean install
+- Run the following command to start the containers(Java container + SQL container)
+  ```
+  $ docker compose up -d
+  ```
+- To view the logs use:
+  ```
+  $ docker compose logs -f
+  ```
+- To view running container:
+  ```
+  $ docker compose ps
+  ```  
+- To stop the container:
+  ```
+  $ docker compose stop
+  ```

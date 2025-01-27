@@ -24,7 +24,7 @@ WORKDIR /app
 COPY /target/GroceryBookingApplication-1.0.jar .
 
 # Expose the port the application will run on
-EXPOSE 8080
+EXPOSE 8081
 
 # Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "grocery-booking-app.jar"]
+ENTRYPOINT ["java", "-jar", "GroceryBookingApplication-1.0.jar"]

@@ -30,7 +30,7 @@ services:
       SPRING_DATASOURCE_USERNAME: groceryuser
       SPRING_DATASOURCE_PASSWORD: grocerypass@21
     ports:
-      - "8080:8080"
+      - "8081:8081"
     networks:
       - app-network
 
